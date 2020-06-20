@@ -7,14 +7,14 @@ def prepend(a, b) {
 
 def main() {
 
-    # wille supports tensors of rank <= 1, essentailly scalars and vectors
-    # a scalar can alternatively be specified without the brackets.
-    # only supported datatype is int16
+    // wille supports tensors of rank <= 1, essentailly scalars and vectors
+    // a scalar can alternatively be specified without the brackets.
+    // only supported datatype is int16
     var a = [5,6];
     var b = 3;
     var c = [5,7,9,10,11];
 
-    # builtins - append, scale, print
+    // builtins - append, scale, print
     print(append(a, c) * b);
     var d = scale(a, b);
 

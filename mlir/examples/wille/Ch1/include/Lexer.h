@@ -46,7 +46,7 @@ enum Token : int {
    /// Move to next token in stream and return it.
    Token getNextToken() { return curTok = getTok(); }
    /// Move to the next token in stream, asserting on the curr token
-   /// to macth the expectation.
+   /// to match the expectation.
    void consume(Token tok) {
      assert(tok == curTok && "consume: Token mismatch");
      getNextToken();
@@ -89,7 +89,7 @@ enum Token : int {
      }
      return nextchar;
    }
-   /// Return next token from stdard input.
+   /// Return next token from standard input.
    Token getTok() {
      // skip whitespaces.
      while (isspace(lastChar))
@@ -110,25 +110,28 @@ enum Token : int {
        if (identifierStr == "var") return tok_var;
        return tok_identifier;
      }
-     // Number: [0-9.]+
-     if (isdigit(lastChar) || lastChar == '.') {
+     // Number: [0-9]+
+     if (isdigit(lastChar)) {
        std:: string numStr;
        do {
 	 numStr += lastChar;
 	 lastChar = Token(getNextChar());
-       }while (isdigit(lastChar) || lastChar == '.');
+       }while (isdigit(lastChar));
 
        numVal = strtod(numStr.c_str(), nullptr);
        return tok_number;
      }
-
+     
      // Comment until end of line.
-     if (lastChar == '#') {
-       do {
-	 lastChar = Token(getNextChar());
-       } while (lastChar != EOF && lastChar != '\n' && lastChar != '\r');
-
-       if (lastChar != EOF) return getTok();
+     if (lastChar == '/') {
+       lastChar = Token(getNextChar());
+	 
+	 if (lastChar == '/') {
+	   do {
+	     lastChar = Token(getNextChar());
+	   } while (lastChar != EOF && lastChar != '\n' && lastChar != '\r');
+	 } 
+	 if (lastChar != EOF) return getTok();
      }
      // Check for eof. Do not eat the eof.
      if (lastChar == EOF) return tok_eof;
