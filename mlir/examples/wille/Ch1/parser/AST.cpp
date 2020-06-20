@@ -12,7 +12,7 @@ namespace {
   struct Indent {
     Indent(int &level) : level(level) { ++level; }
     ~Indent() { --level; }
-    int level;
+    int &level;
   };
   /// Helper class that implement the AST tree traversal and print the nodes along
   /// the way. The only data member is the current indentation level.
